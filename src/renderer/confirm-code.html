@@ -11,10 +11,19 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <div id="app">
+    <div id="confirmation-code-step">
       <form id="confirm-code-form">
-        <label for="confirm-code-input">Confirmation Code:</label>
-        <input type="text" id="confirm-code-input" required />
+        <img
+          id="signup-logo"
+          src="../renderer/assests/vama-desktop-signup-outline 1.png"
+          alt="Sign Up"
+        />
+        <span id="display-phone-number"></span>
+        <p class="confirmation-code-text">
+          We have sent you an SMS with the code
+        </p>
+
+        <input type="text" id="confirm-code-input" placeholder="Code" />
         <button type="submit">Next</button>
       </form>
     </div>
