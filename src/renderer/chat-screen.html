@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline'"
+    />
+    <title>Chat App</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div id="sidebar">
+        <div id="conversation-list">
+          <!-- List of conversations and participants -->
+          <!-- For assessment, you can have a single conversation with an imaginary user -->
+        </div>
+      </div>
+      <div id="chat-container">
+        <div id="selected-conversation">
+          <!-- Display selected conversation messages here -->
+        </div>
+        <div id="message-input-container">
+          <input
+            type="text"
+            id="message-input"
+            placeholder="Type your message..."
+          />
+          <button id="send-button">Send</button>
+        </div>
+      </div>
+    </div>
+    <script src="js/renderer.js"></script>
+  </body>
+</html>
