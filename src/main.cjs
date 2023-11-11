@@ -13,7 +13,7 @@ function createWindow() {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
-      preload: path.join(__dirname, "./preload.js"),
+      preload: path.join(__dirname, "./preload.cjs"),
     },
   });
 

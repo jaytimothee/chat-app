@@ -1,8 +1,9 @@
 {
+  "type": "module",
   "name": "chat-app",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
+  "main": "src/main.cjs",
   "scripts": {
     "start": "electron ."
   },

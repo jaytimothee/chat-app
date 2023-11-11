@@ -1,11 +1,97 @@
 body {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f5f5f5;
 }
 
 #app {
-  display: flex;
-  height: 100vh;
+  text-align: center;
 }
 
-/* Add more styles as per your UI design */
+#phone-sign-up {
+  text-align: center;
+}
+
+#phone-number-form {
+  max-width: 300px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+#signup-logo {
+  height: 180px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.phone-number-label {
+  color: #1c1c1e;
+  text-align: center;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 590;
+  line-height: normal;
+  letter-spacing: -0.00506rem;
+}
+
+#phone-number-input {
+  display: flex;
+  height: 16px;
+  width: 100%;
+  padding: 1rem 0.25rem;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.625rem;
+  border: 0.5px solid var(--colors-separator-light-with-transparency, #e5e5ea);
+}
+
+.phone-number-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.country-code {
+  position: absolute;
+  left: 5px;
+  display: flex;
+  padding: 0.625rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 0.625rem;
+  background: var(--colors-background-light-secondary, #f2f2f7);
+}
+
+#phone-number-input::placeholder {
+  color: var(--colors-text-light-tertiary, #aeaeb2);
+  font-family: "SF Pro", sans-serif;
+  text-indent: 45px;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.125rem;
+  letter-spacing: -0.00269rem;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
