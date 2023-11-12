@@ -2,7 +2,8 @@
 
 // Import necessary classes for sign up form
 import { PhoneNumberStep, ConfirmCodeStep, NameStep } from "./StepStrategy.mjs";
-import { initializeChatConversation } from "./initializeChatConversation.mjs";
+import { initializeSidebarChatConversation } from "./initializeSidebarChatConversation.mjs";
+import { initializeMainWindowConversation } from "./mainChatWindowConversation.mjs";
 
 const currentPage = getCurrentPage();
 console.log("Renderer process started!");
@@ -30,5 +31,10 @@ ipcRenderer.on("send-user-phone-number", (event) => {
 });
 
 if (currentPage.includes("chat-screen.html")) {
-  initializeChatConversation();
+  initializeSidebarChatConversation();
+  initializeMainWindowConversation();
+
+  ipcRenderer.on("send-selected-conversation", (event) => {
+    initializeMainWindowConversation(event.id);
+  });
 }

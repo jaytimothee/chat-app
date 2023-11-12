@@ -1,12 +1,92 @@
 import chatConversations from "./chatConversations.mjs";
 
-function initializeChatConversation() {
+function initializeMainWindowConversation(id) {
   const chatMessagesContainer = document.querySelector(".chat-messages");
-  console.log("conversation init ", chatConversations);
-  chatConversations.forEach((message) => {
+  chatMessagesContainer.innerHTML = "";
+  getMessagesForRecipient(chatConversations, id).forEach((message) => {
     const messageElement = createMessageElement(message);
     chatMessagesContainer.appendChild(messageElement);
   });
+  updateChatHeader(id);
+}
+
+function getMessagesForRecipient(messages, id) {
+  if (!id) {
+    // If no id is provided, return first conversation from side bar
+    return messages.length > 0
+      ? getMessagesForRecipient(messages, messages[0].id)
+      : [];
+  }
+
+  // Filter and sort messages
+  const filteredMessages = messages.filter((message) => {
+    // Check if the message matches the provided id
+    if (message.id === id) {
+      return true;
+    }
+
+    // Check if the message is from you and has a 'to' field matching the provided id
+    if (message.from === "you" && message.to === id) {
+      return true;
+    }
+
+    return false;
+  });
+
+  // Sort messages by timestamp
+  filteredMessages.sort((a, b) => {
+    const timeA = convertTimestampToComparable(a.timestamp);
+    const timeB = convertTimestampToComparable(b.timestamp);
+    return timeA.localeCompare(timeB);
+  });
+
+  return filteredMessages;
+}
+
+function updateChatHeader(conversationId) {
+  const conversation = getConversationById(conversationId);
+
+  if (conversation) {
+    const recipientAvatar = document.getElementById("recipient-avatar");
+    const chattingWith = document.querySelector(".chatting-with");
+
+    // Update recipient avatar
+    recipientAvatar.src = conversation.recipientAvatar;
+    recipientAvatar.alt = `Avatar of ${conversation.recipientName}`;
+
+    // Update chatting with text
+    chattingWith.textContent = conversation.recipientName;
+  } else {
+    // Handle the case where conversationId is not valid or conversation not found
+    console.log("Conversation not found");
+  }
+}
+
+function getConversationById(conversationId) {
+  // If no conversationId is provided, return the first conversation
+  if (!conversationId) {
+    return chatConversations[0];
+  }
+
+  // Find the conversation with the provided conversationId
+  const conversation = chatConversations.find(
+    (chat) => chat.id === conversationId
+  );
+
+  // Return the found conversation or null if not found
+  return conversation || null;
+}
+
+// Function to convert timestamp to a comparable format
+function convertTimestampToComparable(timestamp) {
+  const date = new Date();
+  const [time, period] = timestamp.split(" ");
+  const [hours, minutes] = time.split(":");
+  date.setHours(
+    parseInt(hours) + (period === "PM" && parseInt(hours) !== 12 ? 12 : 0)
+  );
+  date.setMinutes(parseInt(minutes));
+  return date.toISOString();
 }
 
 function createMessageElement(message) {
@@ -67,80 +147,4 @@ function createSeenTickElement() {
   return seenTickElement;
 }
 
-// Call the function to render sidebar conversations
-renderConversations();
-
-// Function to render the conversations in the sidebar
-function renderConversations() {
-  const conversationList = document.getElementById("conversation-list");
-
-  // Clear existing items
-  conversationList.innerHTML = "";
-
-  // Filter conversations
-  const filteredConversation = filterConversations(chatConversations);
-
-  // Function to filter out conversations from yourself and keep only the first for each recipient
-  function filterConversations(conversations) {
-    const filteredConversation = [];
-    const uniqueRecipients = new Set();
-
-    for (const message of conversations) {
-      if (
-        message.from !== "you" &&
-        !uniqueRecipients.has(message.recipientName)
-      ) {
-        filteredConversation.push(message);
-        uniqueRecipients.add(message.recipientName);
-      }
-    }
-
-    return filteredConversation;
-  }
-
-  // Add conversation items
-  filteredConversation.forEach((conversation) => {
-    if (conversation.from === "you") return;
-    const conversationItem = createSidebarConversationItem(conversation);
-    conversationList.appendChild(conversationItem);
-  });
-}
-
-function createSidebarConversationItem(conversation) {
-  const conversationItem = document.createElement("li");
-  conversationItem.classList.add("conversation-item");
-
-  const recipientAvatar = document.createElement("img");
-  recipientAvatar.classList.add("recipient-avatar");
-  recipientAvatar.src = conversation.recipientAvatar;
-  recipientAvatar.alt = "avatar";
-
-  const messageContainer = document.createElement("div");
-  messageContainer.classList.add("recipient-message-container");
-
-  const recipientName = document.createElement("span");
-  recipientName.classList.add("recipient-name");
-  recipientName.textContent = conversation.recipientName;
-
-  const recipientMessage = document.createElement("span");
-  recipientMessage.classList.add("recipient-message");
-  recipientMessage.textContent =
-    conversation.text.length > 50
-      ? conversation.text.substring(0, 50) + "..."
-      : conversation.text;
-
-  const timestamp = document.createElement("span");
-  timestamp.classList.add("timestamp");
-  timestamp.textContent = conversation.timestamp;
-
-  messageContainer.appendChild(recipientName);
-  messageContainer.appendChild(recipientMessage);
-  messageContainer.appendChild(timestamp);
-
-  conversationItem.appendChild(recipientAvatar);
-  conversationItem.appendChild(messageContainer);
-
-  return conversationItem;
-}
-
-export { initializeChatConversation };
+export { initializeMainWindowConversation };

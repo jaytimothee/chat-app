@@ -44,10 +44,9 @@ ipcMain.on("set-user-phone-number", (event) => {
   event.sender.send("send-user-phone-number", userState.getUser());
 });
 
-// ipcMain.on("initialize-chat-conversation", (event) => {
-//   // Send the initial conversation to the renderer process
-//   event.sender.send("initialize-chat-conversation", chatConversations);
-// });
+ipcMain.on("select-conversation", (event, conversation) => {
+  mainWindow.webContents.send("send-selected-conversation", conversation);
+});
 
 // Application setup
 app.whenReady().then(() => {
