@@ -23,15 +23,6 @@ function addMessage(message) {
 
 const chatConversation = [
   {
-    id: getSenderId("Jeff"),
-    recipientName: "Jeff",
-    recipientAvatar: "./assets/img3.png",
-    text: "Lets have a random conversation aboout a random topic",
-    timestamp: getFormattedTimestamp(),
-    from: "other",
-    type: "text",
-  },
-  {
     id: getSenderId("Darryl"),
     recipientName: "Darryl",
     recipientAvatar: "./assets/img.png",
@@ -49,26 +40,6 @@ const chatConversation = [
     from: "other",
     type: "text",
   },
-
-  {
-    id: getSenderId("Alice"),
-    recipientName: "Alice",
-    recipientAvatar: "./assets/img2.png",
-    text: "Hello! How's it going?",
-    timestamp: getFormattedTimestamp(),
-    from: "other",
-    type: "text",
-  },
-  {
-    id: getSenderId("Bob"),
-    recipientName: "Bob",
-    recipientAvatar: "./assets/img4.png",
-    image: "./assets/image1.jpg",
-    timestamp: getFormattedTimestamp(),
-    text: "Started mowing the lawn today",
-    from: "other",
-    type: "text",
-  },
   {
     id: getSenderId("Darryl"),
     recipientName: "Darryl",
@@ -78,39 +49,7 @@ const chatConversation = [
     from: "other",
     type: "text",
   },
-  {
-    id: getSenderId("Jeff"),
-    recipientName: "Jeff",
-    recipientAvatar: "./assets/img2.png",
-    text: "How's your day going?",
-    timestamp: getFormattedTimestamp(),
-    from: "other",
-    type: "text",
-  },
-  {
-    text: "Don't forget to be a good person today.",
-    timestamp: getFormattedTimestamp(),
-    from: "you",
-    to: getSenderId("Jeff"),
-  },
-  {
-    text: "Thanks! I'll keep that in mind.",
-    timestamp: getFormattedTimestamp(),
-    from: "you",
-    to: getSenderId("Jeff"),
-  },
-  {
-    text: "It's going well, thank you! How about yours?",
-    timestamp: getFormattedTimestamp(),
-    from: "you",
-    to: getSenderId("Alice"),
-  },
-  {
-    text: "Hello Bob!",
-    timestamp: getFormattedTimestamp(),
-    from: "you",
-    to: getSenderId("Bob"),
-  },
+
   {
     text: "When are you comming to Spain",
     timestamp: getFormattedTimestamp(),
