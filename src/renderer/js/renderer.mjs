@@ -2,6 +2,7 @@
 
 // Import necessary classes for sign up form
 import { PhoneNumberStep, ConfirmCodeStep, NameStep } from "./StepStrategy.mjs";
+import { initializeChatConversation } from "./initializeChatConversation.mjs";
 
 const currentPage = getCurrentPage();
 console.log("Renderer process started!");
@@ -23,8 +24,11 @@ if (currentStepStrategy) {
 }
 
 ipcRenderer.on("send-user-phone-number", (event) => {
-  // Update UI with the phone number, e.g., by setting the innerHTML of a div
   document.getElementById(
     "display-phone-number"
   ).innerText = `+1${event["phone-number"]}`;
 });
+
+if (currentPage.includes("chat-screen.html")) {
+  initializeChatConversation();
+}

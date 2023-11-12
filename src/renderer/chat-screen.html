@@ -14,38 +14,20 @@
     <div class="chat-container">
       <!-- Sidebar for conversations -->
       <div class="sidebar">
-        <ul class="conversation-list">
-          <li class="conversation-item">
-            <img
-              class="recipient-avatar"
-              src="./assests/img.png"
-              alt="avatar"
-            />
-            <div class="recipient-message-container">
-              <span class="recipient-name">Darryl</span>
-              <span class="recipient-message">
-                but I think mostly they are targeting...
-              </span>
-              <span class="timestamp">6:41 AM</span>
-            </div>
-          </li>
-          <!-- Add more conversation items as needed -->
-        </ul>
+        <ul class="conversation-list" id="conversation-list"></ul>
       </div>
 
       <!-- Main window for the chat -->
       <div class="main-window">
         <div class="chat-header">
-          <img class="recipient-avatar" src="./assests/img.png" alt="avatar" />
+          <img class="recipient-avatar" src="./assets/img.png" alt="avatar" />
           <span class="chatting-with">Darryl</span>
         </div>
-        <div class="chat-messages">
-          <!-- Chat messages will go here -->
-        </div>
+        <div class="chat-messages"></div>
         <div class="chat-input">
           <input type="text" placeholder="message" />
           <button id="send-chat-btn">
-            <img src="./assests/send-btn.png" alt="send-btn" />
+            <img src="./assets/send-btn.png" alt="send-btn" />
           </button>
         </div>
       </div>

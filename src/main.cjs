@@ -2,9 +2,9 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 
 const userState = require("./renderer/js/userState.cjs");
+// const chatConversations = require("./renderer/js/chatConversations.cjs");
 
 let mainWindow;
-let conversation = [];
 let currentStep = "phone-number";
 
 function createWindow() {
@@ -20,9 +20,6 @@ function createWindow() {
 
   // Load the initial page
   loadPage("phone-number.html");
-
-  // Send the initial conversation to the renderer process
-  mainWindow.webContents.send("initialize-conversation", conversation);
 }
 
 function loadPage(page) {
@@ -38,11 +35,8 @@ function loadPage(page) {
 ipcMain.on("move-to-next-step", (event, userData) => {
   // Move to the next step and load the corresponding page
   currentStep = userData.nextStep;
-  console.log("cur step ", currentStep);
   userState.updateUser(userData);
   loadPage(`${currentStep}.html`);
-
-  console.log(userState.getUser());
 });
 
 ipcMain.on("set-user-phone-number", (event) => {
@@ -50,10 +44,10 @@ ipcMain.on("set-user-phone-number", (event) => {
   event.sender.send("send-user-phone-number", userState.getUser());
 });
 
-ipcMain.on("show-chat-screen", () => {
-  // Load the chat screen
-  loadPage("chat-screen.html");
-});
+// ipcMain.on("initialize-chat-conversation", (event) => {
+//   // Send the initial conversation to the renderer process
+//   event.sender.send("initialize-chat-conversation", chatConversations);
+// });
 
 // Application setup
 app.whenReady().then(() => {
