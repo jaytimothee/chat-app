@@ -26,5 +26,5 @@ ipcRenderer.on("send-user-phone-number", (event) => {
   // Update UI with the phone number, e.g., by setting the innerHTML of a div
   document.getElementById(
     "display-phone-number"
-  ).innerText = `+1${event.phoneNumber}`;
+  ).innerText = `+1${event["phone-number"]}`;
 });

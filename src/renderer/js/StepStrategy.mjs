@@ -18,8 +18,14 @@ class StepStrategy {
 
   #validateAndProceed() {
     const inputValue = this.#getInputValue();
-    if (this.validationCallback(inputValue)) {
-      this.user[this.currentStep] = inputValue;
+    if (this.validationCallback(inputValue[this.currentStep])) {
+      if (this.currentStep === "name") {
+        // Handle the name step with separate first-name and last-name inputs
+        this.user.firstName = inputValue["first-name"];
+        this.user.lastName = inputValue["last-name"];
+      } else {
+        this.user[this.currentStep] = inputValue[this.currentStep];
+      }
       this.user.nextStep = this.nextStep;
 
       ipcRenderer.send("move-to-next-step", this.user);
@@ -31,7 +37,14 @@ class StepStrategy {
   }
 
   #getInputValue() {
-    return this.form.querySelector("input").value;
+    const inputElements = this.form.querySelectorAll("input");
+    const inputValues = {};
+
+    inputElements.forEach((input) => {
+      inputValues[input.name] = input.value;
+    });
+
+    return inputValues;
   }
 }
 

@@ -1,8 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 
+const userState = require("./renderer/js/userState.cjs");
+
 let mainWindow;
-let user = {};
 let conversation = [];
 let currentStep = "phone-number";
 
@@ -37,13 +38,16 @@ function loadPage(page) {
 ipcMain.on("move-to-next-step", (event, userData) => {
   // Move to the next step and load the corresponding page
   currentStep = userData.nextStep;
-  user.phoneNumber = userData["phone-number"];
+  console.log("cur step ", currentStep);
+  userState.updateUser(userData);
   loadPage(`${currentStep}.html`);
+
+  console.log(userState.getUser());
 });
 
 ipcMain.on("set-user-phone-number", (event) => {
   // Send the user data to the renderer process
-  event.sender.send("send-user-phone-number", user);
+  event.sender.send("send-user-phone-number", userState.getUser());
 });
 
 ipcMain.on("show-chat-screen", () => {

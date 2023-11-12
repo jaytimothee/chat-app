@@ -11,24 +11,42 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <div id="app">
-      <div id="sidebar">
-        <div id="conversation-list">
-          <!-- List of conversations and participants -->
-          <!-- For assessment, you can have a single conversation with an imaginary user -->
-        </div>
+    <div class="chat-container">
+      <!-- Sidebar for conversations -->
+      <div class="sidebar">
+        <ul class="conversation-list">
+          <li class="conversation-item">
+            <img
+              class="recipient-avatar"
+              src="./assests/img.png"
+              alt="avatar"
+            />
+            <div class="recipient-message-container">
+              <span class="recipient-name">Darryl</span>
+              <span class="recipient-message">
+                but I think mostly they are targeting...
+              </span>
+              <span class="timestamp">6:41 AM</span>
+            </div>
+          </li>
+          <!-- Add more conversation items as needed -->
+        </ul>
       </div>
-      <div id="chat-container">
-        <div id="selected-conversation">
-          <!-- Display selected conversation messages here -->
+
+      <!-- Main window for the chat -->
+      <div class="main-window">
+        <div class="chat-header">
+          <img class="recipient-avatar" src="./assests/img.png" alt="avatar" />
+          <span class="chatting-with">Darryl</span>
         </div>
-        <div id="message-input-container">
-          <input
-            type="text"
-            id="message-input"
-            placeholder="Type your message..."
-          />
-          <button id="send-button">Send</button>
+        <div class="chat-messages">
+          <!-- Chat messages will go here -->
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="message" />
+          <button id="send-chat-btn">
+            <img src="./assests/send-btn.png" alt="send-btn" />
+          </button>
         </div>
       </div>
     </div>
