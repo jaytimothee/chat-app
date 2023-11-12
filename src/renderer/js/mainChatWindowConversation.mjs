@@ -11,6 +11,7 @@ function initializeMainWindowConversation(id) {
 }
 
 function getMessagesForRecipient(messages, id) {
+  console.log("getMessagesForRecipient", id);
   if (!id) {
     // If no id is provided, return first conversation from side bar
     return messages.length > 0
@@ -56,6 +57,8 @@ function updateChatHeader(conversationId) {
 
     // Update chatting with text
     chattingWith.textContent = conversation.recipientName;
+
+    ipcRenderer.send("current-recipient", conversation.id);
   } else {
     // Handle the case where conversationId is not valid or conversation not found
     console.log("Conversation not found");
@@ -147,4 +150,8 @@ function createSeenTickElement() {
   return seenTickElement;
 }
 
-export { initializeMainWindowConversation };
+export {
+  initializeMainWindowConversation,
+  createMessageElement,
+  getMessagesForRecipient,
+};

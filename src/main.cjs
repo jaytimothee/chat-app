@@ -48,6 +48,11 @@ ipcMain.on("select-conversation", (event, conversation) => {
   mainWindow.webContents.send("send-selected-conversation", conversation);
 });
 
+ipcMain.on("current-recipient", (event, recipientId) => {
+  console.log("recipient: ", recipientId);
+  mainWindow.webContents.send("current-chat-recipient", recipientId);
+});
+
 // Application setup
 app.whenReady().then(() => {
   createWindow();

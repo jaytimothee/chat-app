@@ -3,7 +3,12 @@
 // Import necessary classes for sign up form
 import { PhoneNumberStep, ConfirmCodeStep, NameStep } from "./StepStrategy.mjs";
 import { initializeSidebarChatConversation } from "./initializeSidebarChatConversation.mjs";
-import { initializeMainWindowConversation } from "./mainChatWindowConversation.mjs";
+import {
+  initializeMainWindowConversation,
+  getMessagesForRecipient,
+  createMessageElement,
+} from "./mainChatWindowConversation.mjs";
+import chatConversations, { addMessage } from "./chatConversations.mjs";
 
 const currentPage = getCurrentPage();
 console.log("Renderer process started!");
@@ -37,4 +42,53 @@ if (currentPage.includes("chat-screen.html")) {
   ipcRenderer.on("send-selected-conversation", (event) => {
     initializeMainWindowConversation(event.id);
   });
+
+  ipcRenderer.on("current-chat-recipient", (event) => {
+    let messageId = event;
+    console.log("message-id", messageId);
+
+    const sendChatBtn = document.getElementById("send-chat-btn");
+
+    // Listen for the click event on the send button
+    sendChatBtn.addEventListener("click", () => {
+      const inputElement = document.querySelector(".chat-input input");
+      const messageText = inputElement.value.trim();
+
+      if (messageText !== "") {
+        const newMessage = {
+          text: messageText,
+          timestamp: getCurrentTimestamp(),
+          from: "you",
+          to: messageId,
+        };
+
+        addMessage(newMessage);
+        console.log("message-id-again", messageId);
+
+        updateChatUI(messageId);
+        inputElement.value = ""; // Clear the input field
+      }
+    });
+  });
+
+  function updateChatUI(messageId) {
+    const chatMessagesContainer = document.querySelector(".chat-messages");
+    chatMessagesContainer.innerHTML = ""; // Clear existing messages
+    console.log("id", messageId);
+    // Iterate through chatConversation and create message elements
+    getMessagesForRecipient(chatConversations, messageId).forEach((message) => {
+      const messageElement = createMessageElement(message);
+      chatMessagesContainer.appendChild(messageElement);
+    });
+  }
+
+  // Function to get the current timestamp
+  function getCurrentTimestamp() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+    return `${hours % 12}:${minutes.toString().padStart(2, "0")} ${ampm}`;
+  }
 }
