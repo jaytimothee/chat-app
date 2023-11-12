@@ -19,8 +19,10 @@ class StepStrategy {
   #validateAndProceed() {
     const inputValue = this.#getInputValue();
     if (this.validationCallback(inputValue)) {
-      this.user[this.nextStep] = inputValue;
-      ipcRenderer.send("move-to-next-step", this.nextStep, this.user);
+      this.user[this.currentStep] = inputValue;
+      this.user.nextStep = this.nextStep;
+
+      ipcRenderer.send("move-to-next-step", this.user);
     } else {
       alertError(
         `Invalid ${this.currentStep}. Please enter a valid ${this.currentStep}.`
@@ -93,12 +95,18 @@ function isValidName(name) {
 function alertError(message) {
   Toastify.toast({
     text: message,
-    duration: 5000,
+    duration: 3000,
     close: false,
+    position: "bottom right",
     style: {
-      background: "red",
-      color: "white",
-      textAlign: "center",
+      background: "#E53E3E",
+      color: "#FFF",
+      borderRadius: "8px",
+      fontSize: "1rem",
+      padding: "1.25rem",
+      width: "200px",
+      boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+      boxSizing: "border-box",
     },
   });
 }
@@ -109,9 +117,12 @@ function alertSuccess(message) {
     duration: 5000,
     close: false,
     style: {
-      background: "green",
-      color: "white",
-      textAlign: "center",
+      background: "#E53E3E",
+      color: "#FFF",
+      borderRadius: "8px",
+      fontSize: "1rem",
+      padding: "1.25rem",
+      boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
     },
   });
 }

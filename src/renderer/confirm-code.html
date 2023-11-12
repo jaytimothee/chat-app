@@ -24,9 +24,21 @@
         </p>
 
         <input type="text" id="confirm-code-input" placeholder="Code" />
-        <button type="submit">Next</button>
+        <button type="submit" id="next-button">Next</button>
       </form>
     </div>
     <script type="module" src="js/renderer.mjs"></script>
+    <script>
+      const confirmCodeInput = document.getElementById("confirm-code-input");
+      const nextButton = document.getElementById("next-button");
+
+      // Initial check and set the button state
+      nextButton.disabled = confirmCodeInput.value.trim() === "";
+
+      // Add event listener to update the button state on input
+      confirmCodeInput.addEventListener("input", function () {
+        nextButton.disabled = confirmCodeInput.value.trim() === "";
+      });
+    </script>
   </body>
 </html>

@@ -149,3 +149,28 @@ button {
   outline: none;
   border-color: #007bff !important;
 }
+
+#display-phone-number {
+  color: var(--colors-text-light-primary, #1c1c1e);
+  text-align: center;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 590;
+  line-height: normal;
+  letter-spacing: -0.00506rem;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+#next-button {
+  border-radius: 0.625rem;
+  background: var(--colors-text-light-primary, #1c1c1e);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+#next-button:disabled {
+  background: #999999;
+  cursor: not-allowed;
+}
