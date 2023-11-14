@@ -1,11 +1,10 @@
 # chat-app
-<img width="1507" alt="Screen Shot 2023-11-13 at 9 35 22 PM" src="https://github.com/jaytimothee/chat-app/assets/25870316/8e5d5921-f692-423d-a8b5-92e471bfac42">
-
-<img width="1506" alt="Screen Shot 2023-11-13 at 9 35 39 PM" src="https://github.com/jaytimothee/chat-app/assets/25870316/400f8836-3163-47c6-b7f7-fde7ec09d280">
+https://github.com/jaytimothee/chat-app/assets/25870316/b714c18c-096f-49c6-be54-2f1343fd871f
 
 <img width="1511" alt="Screen Shot 2023-11-13 at 9 35 57 PM" src="https://github.com/jaytimothee/chat-app/assets/25870316/b9642f74-2e5c-45a9-a5f9-7b8deb804abc">
+<img width="1507" alt="Screen Shot 2023-11-13 at 9 35 22 PM" src="https://github.com/jaytimothee/chat-app/assets/25870316/8e5d5921-f692-423d-a8b5-92e471bfac42">
+<img width="1506" alt="Screen Shot 2023-11-13 at 9 35 39 PM" src="https://github.com/jaytimothee/chat-app/assets/25870316/400f8836-3163-47c6-b7f7-fde7ec09d280">
 
-<img width="1508" alt="Screen Shot 2023-11-13 at 9 38 11 PM" src="https://github.com/jaytimothee/chat-app/assets/25870316/9fb9bf09-d9ce-458e-94d0-40671333707e">
 
 # Main Process (`main.cjs`) Documentation
 
