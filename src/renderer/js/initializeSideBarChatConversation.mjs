@@ -6,44 +6,16 @@ function initializeSidebarChatConversation() {
 }
 
 // Function to render the conversations in the sidebar
-function renderConversations() {
+function renderConversations(conversation) {
   const conversationList = document.getElementById("conversation-list");
 
   // Clear existing items
   conversationList.innerHTML = "";
 
-  // Filter conversations
-  const filteredConversation = filterConversations(chatConversations);
-
-  // Function to filter out conversations from yourself and keep only the first for each recipient
-  function filterConversations(conversations) {
-    const filteredConversation = [];
-    const uniqueRecipients = new Set();
-
-    for (const message of conversations) {
-      if (
-        message.from !== "you" &&
-        !uniqueRecipients.has(message.recipientName)
-      ) {
-        filteredConversation.push(message);
-        uniqueRecipients.add(message.recipientName);
-      }
-    }
-
-    return filteredConversation;
-  }
-
-  // Add conversation items
-  filteredConversation.forEach((conversation) => {
-    if (conversation.from === "you") return; //safe gaurd to ensure sidebar conversations do not include messages from myself
-    const conversationItem = createSidebarConversationItem(conversation);
-
-    conversationItem.addEventListener("click", () => {
-      // Emit event to main process with conversation details
-      ipcRenderer.send("select-conversation", conversation);
-    });
-    conversationList.appendChild(conversationItem);
-  });
+  const conversationItem = createSidebarConversationItem(
+    conversation || chatConversations[0]
+  );
+  conversationList.appendChild(conversationItem);
 }
 
 function createSidebarConversationItem(conversation) {
@@ -66,7 +38,7 @@ function createSidebarConversationItem(conversation) {
   recipientMessage.classList.add("recipient-message");
   recipientMessage.textContent =
     conversation.text.length > 50
-      ? conversation.text.substring(0, 50) + "..."
+      ? conversation.text.substring(0, 33) + "..."
       : conversation.text;
 
   const timestamp = document.createElement("span");
@@ -83,4 +55,4 @@ function createSidebarConversationItem(conversation) {
   return conversationItem;
 }
 
-export { initializeSidebarChatConversation };
+export { initializeSidebarChatConversation, renderConversations };

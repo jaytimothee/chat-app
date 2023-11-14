@@ -1,4 +1,5 @@
 const senderIdMap = {};
+let isYou = true;
 
 function getSenderId(name) {
   if (!senderIdMap[name]) {
@@ -12,58 +13,37 @@ function generateUniqueId() {
 }
 
 function addMessage(message) {
-  // message.to = getSenderId(findRecipientNameById(id).recipientName);
-  chatConversation.push(message);
-  // console.log("new ", chatConversation);
+  isYou == true ? (message.to = getSenderId("Darryl")) : null;
+  if (isYou) {
+    message.from = "you";
+  } else {
+    message.from = "other";
+    message.recipientName = "Darryl";
+    message.recipientAvatar = "./assets/img.png";
+  }
+  (message.timestamp = getFormattedTimestamp()), (isYou = !isYou); // Toggle the sender for the next message
+
+  chatConversation.unshift(message);
+  getLatestMessage();
 }
 
-// function findRecipientNameById(id) {
-//   return chatConversation.find((recipient) => recipient.id === id);
-// }
+function getLatestMessage() {
+  return chatConversation[0];
+}
 
 const chatConversation = [
   {
     id: getSenderId("Darryl"),
     recipientName: "Darryl",
     recipientAvatar: "./assets/img.png",
-    text: "When are you visiting Scotland again?",
-    timestamp: getFormattedTimestamp(),
-    from: "other",
-    type: "text",
-  },
-  {
-    id: getSenderId("Darryl"),
-    recipientName: "Darryl",
-    recipientAvatar: "./assets/img.png",
-    text: "I think mostly they are targeting parents; my friend’s mother got scammed 20k.",
-    timestamp: getFormattedTimestamp(),
-    from: "other",
-    type: "text",
-  },
-  {
-    id: getSenderId("Darryl"),
-    recipientName: "Darryl",
-    recipientAvatar: "./assets/img.png",
-    text: "Planning any trips soon?",
+    text: "but I think mostly they targeting parents cos my friend’s mother got scammed 20K",
     timestamp: getFormattedTimestamp(),
     from: "other",
     type: "text",
   },
 
   {
-    text: "When are you comming to Spain",
-    timestamp: getFormattedTimestamp(),
-    from: "you",
-    to: getSenderId("Darryl"),
-  },
-  {
-    text: "Today I seen a blue bird for the first time in a long time",
-    timestamp: getFormattedTimestamp(),
-    from: "you",
-    to: getSenderId("Darryl"),
-  },
-  {
-    text: "Do you have a vacuum that I can borrow ",
+    text: "I saw the most recent scam is the ads on Facebook selling seafood at a cheap price",
     timestamp: getFormattedTimestamp(),
     from: "you",
     to: getSenderId("Darryl"),
@@ -81,5 +61,5 @@ function getFormattedTimestamp() {
 
   return formattedTimestamp;
 }
-export { addMessage };
+export { addMessage, getLatestMessage };
 export default chatConversation;

@@ -1,51 +1,20 @@
 import chatConversations from "./chatConversations.mjs";
+import { renderConversations } from "./initializeSideBarChatConversation.mjs";
 
-function initializeMainWindowConversation(id) {
+function initializeMainWindowConversation() {
   const chatMessagesContainer = document.querySelector(".chat-messages");
+  // Clear existing messages before appending the sorted messages
   chatMessagesContainer.innerHTML = "";
-  getMessagesForRecipient(chatConversations, id).forEach((message) => {
+  chatConversations.forEach((message) => {
     const messageElement = createMessageElement(message);
     chatMessagesContainer.appendChild(messageElement);
   });
-  updateChatHeader(id);
+
+  updateChatHeader();
 }
 
-function getMessagesForRecipient(messages, id) {
-  console.log("getMessagesForRecipient", id);
-  if (!id) {
-    // If no id is provided, return first conversation from side bar
-    return messages.length > 0
-      ? getMessagesForRecipient(messages, messages[0].id)
-      : [];
-  }
-
-  // Filter and sort messages
-  const filteredMessages = messages.filter((message) => {
-    // Check if the message matches the provided id
-    if (message.id === id) {
-      return true;
-    }
-
-    // Check if the message is from you and has a 'to' field matching the provided id
-    if (message.from === "you" && message.to === id) {
-      return true;
-    }
-
-    return false;
-  });
-
-  // Sort messages by timestamp
-  filteredMessages.sort((a, b) => {
-    const timeA = convertTimestampToComparable(a.timestamp);
-    const timeB = convertTimestampToComparable(b.timestamp);
-    return timeA.localeCompare(timeB);
-  });
-
-  return filteredMessages;
-}
-
-function updateChatHeader(conversationId) {
-  const conversation = getConversationById(conversationId);
+function updateChatHeader() {
+  const conversation = chatConversations[0];
 
   if (conversation) {
     const recipientAvatar = document.getElementById("recipient-avatar");
@@ -57,46 +26,33 @@ function updateChatHeader(conversationId) {
 
     // Update chatting with text
     chattingWith.textContent = conversation.recipientName;
-
-    ipcRenderer.send("current-recipient", conversation.id);
   } else {
     // Handle the case where conversationId is not valid or conversation not found
     console.log("Conversation not found");
   }
 }
 
-function getConversationById(conversationId) {
-  // If no conversationId is provided, return the first conversation
-  if (!conversationId) {
-    return chatConversations[0];
+function updateChatUI(latestMessage) {
+  const chatMessagesContainer = document.querySelector(".chat-messages");
+
+  // Append the latest message to the chat container
+  if (latestMessage) {
+    const messageElement = createMessageElement(latestMessage);
+    chatMessagesContainer.prepend(messageElement);
   }
 
-  // Find the conversation with the provided conversationId
-  const conversation = chatConversations.find(
-    (chat) => chat.id === conversationId
-  );
-
-  // Return the found conversation or null if not found
-  return conversation || null;
-}
-
-// Function to convert timestamp to a comparable format
-function convertTimestampToComparable(timestamp) {
-  const date = new Date();
-  const [time, period] = timestamp.split(" ");
-  const [hours, minutes] = time.split(":");
-  date.setHours(
-    parseInt(hours) + (period === "PM" && parseInt(hours) !== 12 ? 12 : 0)
-  );
-  date.setMinutes(parseInt(minutes));
-  return date.toISOString();
+  if (latestMessage.from === "other") {
+    console.log("sidebar");
+    renderConversations(latestMessage);
+  }
 }
 
 function createMessageElement(message) {
   const messageElement = document.createElement("div");
   messageElement.classList.add(
     "message",
-    message.from === "you" ? "from-you" : "from-other"
+    message.from === "you" ? "from-you" : "from-other",
+    "animated"
   );
 
   const textElement = document.createElement("span");
@@ -150,8 +106,4 @@ function createSeenTickElement() {
   return seenTickElement;
 }
 
-export {
-  initializeMainWindowConversation,
-  createMessageElement,
-  getMessagesForRecipient,
-};
+export { initializeMainWindowConversation, createMessageElement, updateChatUI };

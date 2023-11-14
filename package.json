@@ -5,13 +5,17 @@
   "description": "",
   "main": "src/main.cjs",
   "scripts": {
-    "start": "electron ."
+    "start": "node --experimental-modules electron ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "electron": "^27.0.4",
+    "esm": "^3.2.25",
     "toastify-js": "^1.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

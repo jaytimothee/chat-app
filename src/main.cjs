@@ -1,7 +1,13 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
+require = require("esm")(module);
 
 const userState = require("./renderer/js/userState.cjs");
+const {
+  addMessage,
+  getLatestMessage,
+} = require("./renderer/js/chatConversations.mjs");
+
 // const chatConversations = require("./renderer/js/chatConversations.cjs");
 
 let mainWindow;
@@ -44,13 +50,9 @@ ipcMain.on("set-user-phone-number", (event) => {
   event.sender.send("send-user-phone-number", userState.getUser());
 });
 
-ipcMain.on("select-conversation", (event, conversation) => {
-  mainWindow.webContents.send("send-selected-conversation", conversation);
-});
-
-ipcMain.on("current-recipient", (event, recipientId) => {
-  console.log("recipient: ", recipientId);
-  mainWindow.webContents.send("current-chat-recipient", recipientId);
+ipcMain.on("send-message", (event, newMessage) => {
+  addMessage(newMessage);
+  mainWindow.webContents.send("update-chat-ui", getLatestMessage()); // Send an update event to the renderer
 });
 
 // Application setup

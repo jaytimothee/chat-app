@@ -248,13 +248,14 @@ label {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  max-width: 300px;
+  min-width: 300px;
   flex-shrink: 0;
 }
 
 .conversation-list {
   list-style: none;
   padding: 0;
-  list-style: none;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -269,6 +270,11 @@ label {
   cursor: pointer;
   background: var(--colors-tint-light-primary, #0071ee);
   transition: background-color 0.3s;
+  max-width: 270px;
+  min-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .conversation-item:hover {
@@ -280,6 +286,7 @@ label {
   display: flex;
   flex: 1;
   flex-direction: column;
+  width: 100%;
 }
 
 .recipient-name {
@@ -301,7 +308,7 @@ label {
 .timestamp {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 15px;
   color: var(--colors-text-light-secondary, #fff);
   font-size: 0.875rem;
   font-style: normal;
@@ -412,6 +419,7 @@ label {
   padding: 20px;
   margin: 5px;
   max-width: 70%;
+  min-width: 50px;
   word-wrap: break-word;
   position: relative;
   animation: slideIn 0.5s ease-in-out;
@@ -461,6 +469,21 @@ label {
   position: absolute;
   bottom: 3px;
   right: 20px;
+}
+
+.animated {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
