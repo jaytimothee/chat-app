@@ -37,23 +37,25 @@ if (currentPage.includes("chat-screen.html")) {
   initializeSidebarChatConversation();
   initializeMainWindowConversation();
 
-  const sendChatBtn = document.getElementById("send-chat-btn");
+  const sendChatButton = document.getElementById("send-chat-btn");
   const inputElement = document.querySelector(".chat-input input");
 
-  // Event listener for the click event on the button
-  sendChatBtn.addEventListener("click", () => {
-    sendMessage();
-  });
+  if (sendChatButton && inputElement) {
+    // Event listener for the click event on the send message button
+    sendChatButton.addEventListener("click", () => {
+      sendMessageAndUpdateUI();
+    });
 
-  // Event listener for the keydown event on the input field
-  inputElement.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      sendMessage();
-    }
-  });
+    // Event listener for the keydown event on the input field
+    inputElement.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        sendMessageAndUpdateUI();
+      }
+    });
+  }
 
   // Function to send the message
-  function sendMessage() {
+  function sendMessageAndUpdateUI() {
     const messageText = inputElement.value.trim();
 
     if (messageText !== "") {
